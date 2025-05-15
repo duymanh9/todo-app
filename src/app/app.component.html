@@ -1,0 +1,32 @@
+<div class="app-container">
+  <h2>Todo List</h2>
+
+  <form (submit)="addTask()">
+    <input type="text" [(ngModel)]="newTask" placeholder="Nhập công việc..." name="taskInput" required />
+    <button type="submit">Thêm</button>
+  </form>
+
+  <ul class="task-list">
+    <li *ngFor="let task of tasks; let i = index" [class.completed]="task.isCompleted">
+      
+      <ng-container *ngIf="editIndex === i; else viewMode">
+        <input type="text" [(ngModel)]="editedTaskName" />
+        <button (click)="saveEdit(i)" class="save-btn">💾</button>
+        <button (click)="cancelEdit()" class="cancel-btn">✕</button>
+      </ng-container>
+
+      <!-- View Mode -->
+      <ng-template #viewMode>
+        {{ task.name }}
+        <div class="task-actions">
+          <button (click)="toggleComplete(task)">✓</button>
+          <button (click)="startEdit(i)">✎</button>
+          <button (click)="deleteTask(task)">✕</button>
+        </div>
+      </ng-template>
+
+    </li>
+  </ul>
+
+</div>
+  
